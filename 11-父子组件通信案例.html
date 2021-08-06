@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <cpn :cnum1='num1' :cnum2='num2'></cpn>
+    </div>
+    <template id="cpn">
+        <div>
+            <h2>{{cnum1}}</h2>
+            <h2>{{cnum2}}</h2>
+        </div>
+    </template>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: { num1: 1, num2: 0 },
+            methods: {},
+            components: {
+                //注册子组件
+                cpn: {
+                    template: '#cpn',
+                    props: ['cnum1', 'cnum2']
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

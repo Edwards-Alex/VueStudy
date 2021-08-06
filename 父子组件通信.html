@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>父子组件通信</title>
+</head>
+
+<body>
+    <div id="app">
+        <cpn :cnum1='num1' :cnum2='num2' @changenum1='changenum1' @changenum2='changenum2'></cpn>
+        <p>num1:{{num1}}</p>
+        <p>num2:{{num2}}</p>
+    </div>
+    <template id="cpn">
+        <div>
+            <p>父传子的值:{{cnum1}}</p>
+            <input type="text" v-bind:value="cinput1" @input="inputnum1">
+            <p>父传子的值:{{cnum2}}</p>
+            <input type="text" v-bind:value="cinput2" @input="inputnum2">
+        </div>
+    </template>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+                num1: 1,
+                num2: 0
+            },
+            methods: {
+                changenum1: function (it) {
+                    this.num1 = parseFloat(it)
+                },
+                changenum2: function (it) {
+                    this.num2 = parseFloat(it)
+                }
+            },
+            components: {
+                cpn: {
+                    template: '#cpn',
+                    data() {
+                        return {
+                            cinput1: this.cnum1,
+                            cinput2: this.cnum2
+                        }
+                    },
+                    props: {
+                        cnum1: Number,
+                        cnum2: Number
+                    },
+                    methods: {
+                        inputnum1: function (event) {
+                            this.cinput1 = event.target.value
+                            this.$emit('changenum1', this.cinput1)
+                            this.cinput2 = this.cinput1 * 100
+                            this.$emit('changenum2', this.cinput2)
+                        },
+                        inputnum2: function (event) {
+                            this.cinput2 = event.target.value
+                            this.$emit('changenum2', this.cinput2)
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

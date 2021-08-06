@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>父组件向子组件传递信息</title>
+</head>
+
+<body>
+    <!-- 通过props向子组件传递数据
+         通过事件向父组件传递数据 
+         父组件向子组件传递数据-->
+    <div id="app">
+        <cpn v-bind:carrays='arrays' :cmessage='message'></cpn>
+    </div>
+    <template id="cpn">
+        <div>
+            <ul>
+                <li v-for="item in carrays">{{item}}</li>
+                <p>{{cmessage}}</p>
+                <p>{{carrays}}</p>
+            </ul>
+        </div>
+    </template>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        //父组件传子组件数据 使用props
+        const cpn = {
+            template: '#cpn',
+            data() {
+                return {}
+            },
+            props: {
+                //通过对象的方式从父组件传值给子组件
+                cmessage: {
+                    type: String,
+                    default: 'aaaaaa'
+                },
+                carrays: {
+                    type: Array,
+                    default() {
+                        return ['xxx', 'yyy', 'zzz']
+                    }
+                }
+            }
+        }
+        const app = new Vue({
+            el: "#app",
+            data: {
+                message: "消息",
+                arrays: ['小邋遢', '黑猫警长', '宝宝巴士']
+            },
+            components: {
+                cpn
+            }
+        })
+    </script>
+</body>
+
+</html>

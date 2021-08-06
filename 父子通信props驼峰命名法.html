@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>props驼峰命名法的问题</title>
+</head>
+
+<body>
+    <div id="app">
+        <cpn :cperson='person'></cpn>
+    </div>
+    <template id="cpn">
+        <div>
+            <p>{{cperson}}</p>
+        </div>
+    </template>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        const cpn = {
+            template: '#cpn',
+            data() {
+                return {}
+            },
+            props: {
+                cperson: {
+                    type: Object,
+                    default() {
+                        return {}
+                    }
+                }
+            }
+        }
+        //注册组件
+        //Vue.component('cpn', cpn)
+        const app = new Vue({
+            el: "#app",
+            data: {
+                person: {
+                    name: '小王',
+                    age: 18
+                }
+            },
+            components: {
+                cpn
+            }
+        })
+    </script>
+</body>
+
+</html>
